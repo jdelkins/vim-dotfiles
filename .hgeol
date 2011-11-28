@@ -1,0 +1,7 @@
+[repository]
+native = LF
+
+[patterns]
+**.vim = native
+vimrc = native
+gvimrc = native
