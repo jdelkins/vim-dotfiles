@@ -1,6 +1,6 @@
 
 filetype off
-call pathogen#runtime_append_all_bundles()
+call pathogen#infect()
 call pathogen#helptags()
 filetype plugin indent on
 
@@ -49,4 +49,6 @@ set colorcolumn=85
 
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 nnoremap <leader>w <C-w>v<C-w>l
-nnoremap <leader>d :silent Explore<cr>
+"nnoremap <leader>d :silent Explore<cr>
+"nnoremap <leader>d :call perlbrws#enter()<cr>
+nnoremap <leader>t :CommandT<cr>
