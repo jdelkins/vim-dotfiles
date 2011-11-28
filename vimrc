@@ -55,15 +55,20 @@ set colorcolumn=85
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 nnoremap <leader>w <C-w>v<C-w>l
 
-if exists("*perlbrws#enter")
-	nnoremap <leader>d :call perlbrws#enter()<cr>
-else
-	nnoremap <leader>d :Explore<cr>
-endif
-
-if exists(":CommandT")
-	nnoremap <leader>t :CommandT<cr>
-endif
+" Note this autocmd is necessary because we are dynamically mapping based on
+" whether plugins are installed, which is not knowable normally when .vimrc
+" is processed. Workaround is to use a VimEnter hook to do the job later.
+autocmd VimEnter * call <SID>dynamic_remaps()
+function! s:dynamic_remaps()
+	if exists(":Perlbrws")
+		nnoremap <leader>d :Perlbrws<cr>
+	else
+		nnoremap <leader>d :Explore<cr>
+	endif
+	if exists(":CommandT")
+		nnoremap <leader>t :CommandT<cr>
+	endif
+endfunction
 
 " Window navigation
 nnoremap <C-h> <C-w>h
