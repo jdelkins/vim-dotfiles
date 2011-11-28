@@ -1,6 +1,6 @@
 " A lot of these ideas came from:
 " http://stevelosh.com/blog/2010/09/coming-home-to-vim/
-" Joel Elkins <joel@elkins.com>
+" Joel D. Elkins <joel@elkins.com>
 " 2011-05-25
 
 filetype off
@@ -54,9 +54,16 @@ set colorcolumn=85
 
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 nnoremap <leader>w <C-w>v<C-w>l
-"nnoremap <leader>d :silent Explore<cr>
-"nnoremap <leader>d :call perlbrws#enter()<cr>
-nnoremap <leader>t :CommandT<cr>
+
+if exists("*perlbrws#enter")
+	nnoremap <leader>d :call perlbrws#enter()<cr>
+else
+	nnoremap <leader>d :Explore<cr>
+endif
+
+if exists(":CommandT")
+	nnoremap <leader>t :CommandT<cr>
+endif
 
 " Window navigation
 nnoremap <C-h> <C-w>h
