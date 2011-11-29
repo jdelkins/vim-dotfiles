@@ -8,8 +8,12 @@ call pathogen#infect()
 call pathogen#helptags()
 filetype plugin indent on
 
-syntax on
+" Plugin defaults
 let g:molokai_original = 1
+let g:CommandTScanDotDirectories = 1
+
+syntax on
+
 colorscheme molokai
 set nocompatible
 
