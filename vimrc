@@ -76,6 +76,11 @@ function! s:dynamic_remaps()
 	else
 		nnoremap <leader>d :Explore<cr>
 	endif
+	if exists(":LustyJuggler")
+		nnoremap <leader>b :LustyJuggler<cr>
+		"note that Command-T has a perfectly good buffer browser mapped by
+		"default to <leader>b, but LustyJuggler is a little better.
+	endif
 	if exists(":CommandT")
 		nnoremap <leader>t :CommandT<cr>
 	endif
