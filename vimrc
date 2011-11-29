@@ -10,6 +10,7 @@ filetype plugin indent on
 
 " Plugin defaults
 let mapleader = ","
+let g:sfe_mapLeader = ",s"
 let g:molokai_original = 1
 let g:CommandTScanDotDirectories = 1
 
