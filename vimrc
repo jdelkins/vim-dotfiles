@@ -39,6 +39,7 @@ set backspace=indent,eol,start
 set laststatus=2
 set relativenumber
 set undofile
+set report=25
 
 nnoremap / /\v
 vnoremap / /\v
@@ -68,6 +69,7 @@ autocmd VimEnter * call <SID>dynamic_remaps()
 function! s:dynamic_remaps()
 	if exists(":LustyFilesystemExplorerFromHere")
 		nnoremap <leader>d :LustyFilesystemExplorerFromHere<cr>
+		command -nargs=? -complete=dir D :call CallLusty('<args>')
 	elseif exists(":Perlbrws")
 		nnoremap <leader>d :Perlbrws<cr>
 	else
@@ -76,6 +78,15 @@ function! s:dynamic_remaps()
 	if exists(":CommandT")
 		nnoremap <leader>t :CommandT<cr>
 	endif
+endfunction
+
+" Helper function to call LustyFilesystemExplorer with a directory-completed
+" argument. A little tricky since Lusty (currently) has a little bug that
+" doesn't properly escape backslashes. Note that an untested alternative may
+" be to use the 'shellslash' option
+function! CallLusty(dir)
+	let l:d = substitute(substitute(a:dir, '\\', '/', 'g'), '/$', '', '')
+	exe ":LustyFilesystemExplorer" l:d
 endfunction
 
 " Window navigation
