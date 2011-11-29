@@ -9,6 +9,7 @@ call pathogen#helptags()
 filetype plugin indent on
 
 " Plugin defaults
+let mapleader = ","
 let g:molokai_original = 1
 let g:CommandTScanDotDirectories = 1
 
@@ -64,7 +65,9 @@ nnoremap <leader>w <C-w>v<C-w>l
 " is processed. Workaround is to use a VimEnter hook to do the job later.
 autocmd VimEnter * call <SID>dynamic_remaps()
 function! s:dynamic_remaps()
-	if exists(":Perlbrws")
+	if exists(":LustyFilesystemExplorerFromHere")
+		nnoremap <leader>d :LustyFilesystemExplorerFromHere<cr>
+	elseif exists(":Perlbrws")
 		nnoremap <leader>d :Perlbrws<cr>
 	else
 		nnoremap <leader>d :Explore<cr>
