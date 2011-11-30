@@ -22,48 +22,48 @@ if $TERM =~# 'screen\|xterm'
 endif
 
 syntax on
-colorscheme molokai
+colorscheme vividchalk
 set nocompatible
 
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set   tabstop=4
+set   shiftwidth=4
+set   softtabstop=4
 set noexpandtab
 
-set encoding=utf-8
-set scrolloff=3
-set autoindent
-set showmode
-set showcmd
-set hidden
-set wildmenu
-set wildmode=list:longest
-set visualbell
+set   encoding=utf-8
+set   scrolloff=3
+set   autoindent
+set   showmode
+set   showcmd
+set   hidden
+set   wildmenu
+set   wildmode=list:longest
+set   visualbell
 set nocursorline
-set ttyfast
-set ruler
-set backspace=indent,eol,start
-set laststatus=2
-set relativenumber
-set undofile
-set report=25
+set   ttyfast
+set   ruler
+set   backspace=indent,eol,start
+set   laststatus=2
+set   relativenumber
+set   undofile
+set   report=2
 
 nnoremap / /\v
 vnoremap / /\v
-set ignorecase
-set smartcase
-set gdefault
-set incsearch
-set showmatch
-set hlsearch
+set   ignorecase
+set   smartcase
+set   gdefault
+set   incsearch
+set   showmatch
+set   hlsearch
 nnoremap <leader><space> :noh<cr>
 nnoremap <tab> %
 vnoremap <tab> %
 
-set wrap
-set textwidth=79
-set formatoptions=qrn1
-set colorcolumn=+1
+set   wrap
+set   textwidth=79
+set   formatoptions=qrn1
+set   colorcolumn=+1
 hi ColorColumn ctermbg=234 guibg=#3B3A32
 
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
@@ -125,3 +125,25 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" Utility function to line up tabular info. Pass in a mark name (e.g. "'a")
+" and this will insert spaces to align the insertion point to the mark's
+" virtcol (visual alignment, not byte alignment). Nothing happens if the
+" point is to the right of the mark.
+function! PadToMark(mk)
+	let goal = virtcol(a:mk)
+	let cur = virtcol(".")
+	let dif = goal - cur
+	if dif > 0
+		exe "normal ".dif."i \e"
+	endif
+endfunction
+
+" Create a series of maps ta, tb, ..., tz (one for each buffer-local mark)
+" to call PadToMark with the corresponding mark name
+" Usage is to put cursor on target column and define a mark with, e.g., ma.
+" Then use, e.g., ta to tabulate other data to that mark position.
+for m in range(26)
+	let c = nr2char(char2nr('a') + m)
+	exe 'nnoremap <silent> t' . c . " :call PadToMark(\"'" . c . '")<cr>'
+endfor
