@@ -13,6 +13,7 @@ let mapleader = ","
 let g:sfe_mapLeader = ",s"
 let g:molokai_original = 1
 let g:CommandTScanDotDirectories = 1
+let g:LustyJugglerShowKeys = 'a'
 
 syntax on
 
@@ -69,20 +70,21 @@ nnoremap <leader>w <C-w>v<C-w>l
 autocmd VimEnter * call <SID>dynamic_remaps()
 function! s:dynamic_remaps()
 	if exists(":LustyFilesystemExplorerFromHere")
-		nnoremap <leader>d :LustyFilesystemExplorerFromHere<cr>
+		nnoremap <silent> <leader>d :LustyFilesystemExplorerFromHere<cr>
 		command -nargs=? -complete=dir D :call CallLusty('<args>')
 	elseif exists(":Perlbrws")
-		nnoremap <leader>d :Perlbrws<cr>
+		nnoremap <silent> <leader>d :Perlbrws<cr>
 	else
-		nnoremap <leader>d :Explore<cr>
+		nnoremap <silent> <leader>d :Explore<cr>
 	endif
 	if exists(":LustyJuggler")
-		nnoremap <leader>b :LustyJuggler<cr>
+		nnoremap <silent> <leader>b :LustyJuggler<cr>
+		nnoremap <silent> <leader><tab> :LustyJugglePrevious<cr>
 		"note that Command-T has a perfectly good buffer browser mapped by
 		"default to <leader>b, but LustyJuggler is a little better.
 	endif
 	if exists(":CommandT")
-		nnoremap <leader>t :CommandT<cr>
+		nnoremap <silent> <leader>t :CommandT<cr>
 	endif
 endfunction
 
