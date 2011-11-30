@@ -76,7 +76,7 @@ function! s:dynamic_file_explorer()
 		nnoremap <silent> <leader>d :LustyFilesystemExplorerFromHere<cr>
 		" On Windows, due to poor design or a qutoting bug in Lusty, we need
 		" to convert backslashes to slashes. For that we use a helper func.
-		if has("+shellslash") && !&shellslash
+		if exists("+shellslash") && !&shellslash
 			command -nargs=? -complete=dir D :call <SID>CallLusty('<args>')
 		else
 			command -nargs=? -complete=dir D :LustyFilesystemExplorer <args>
@@ -111,7 +111,7 @@ endfunction
 " doesn't properly escape backslashes. Note that an untested alternative may
 " be to use the 'shellslash' option
 function! s:CallLusty(dir)
-	let l:d = substitute(substitute(a:dir, '\\', '/', 'g'), '/$', '', '')
+	let l:d = substitute(substitute(a:dir, '\\\(\S\=\)', '/\1', 'g'), '/$', '', '')
 	exe ":LustyFilesystemExplorer" l:d
 endfunction
 
