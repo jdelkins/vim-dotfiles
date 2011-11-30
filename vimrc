@@ -22,6 +22,7 @@ if $TERM =~# 'screen\|xterm'
 endif
 
 syntax on
+autocmd ColorScheme * hi ColorColumn ctermbg=234 guibg=#3B3A32
 colorscheme vividchalk
 set nocompatible
 
@@ -64,7 +65,6 @@ set   wrap
 set   textwidth=79
 set   formatoptions=qrn1
 set   colorcolumn=+1
-hi ColorColumn ctermbg=234 guibg=#3B3A32
 
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 nnoremap <leader>w <C-w>v<C-w>l
