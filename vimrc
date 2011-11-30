@@ -67,24 +67,42 @@ nnoremap <leader>w <C-w>v<C-w>l
 " Note this autocmd is necessary because we are dynamically mapping based on
 " whether plugins are installed, which is not knowable normally when .vimrc
 " is processed. Workaround is to use a VimEnter hook to do the job later.
-autocmd VimEnter * call <SID>dynamic_remaps()
-function! s:dynamic_remaps()
+autocmd VimEnter * call <SID>dynamic_file_explorer()
+autocmd VimEnter * call <SID>dynamic_buffer_explorer()
+
+" Decide which filebrowser to make the default
+function! s:dynamic_file_explorer()
 	if exists(":LustyFilesystemExplorerFromHere")
 		nnoremap <silent> <leader>d :LustyFilesystemExplorerFromHere<cr>
-		command -nargs=? -complete=dir D :call CallLusty('<args>')
+		" On Windows, due to poor design or a qutoting bug in Lusty, we need
+		" to convert backslashes to slashes. For that we use a helper func.
+		if has("+shellslash") && !&shellslash
+			command -nargs=? -complete=dir D :call <SID>CallLusty('<args>')
+		else
+			command -nargs=? -complete=dir D :LustyFilesystemExplorer <args>
+		endif
 	elseif exists(":Perlbrws")
 		nnoremap <silent> <leader>d :Perlbrws<cr>
+		command -nargs=? -complete=dir D :Perlbrws <args>
 	else
 		nnoremap <silent> <leader>d :Explore<cr>
+		command -nargs=? -complete=dir D :Explore <args>
 	endif
+endfunction
+
+" Decide which buffer browser to make the default
+function s:dynamic_buffer_explorer()
 	if exists(":LustyJuggler")
 		nnoremap <silent> <leader>b :LustyJuggler<cr>
 		nnoremap <silent> <leader><tab> :LustyJugglePrevious<cr>
+	elseif exists(":CommandTBuffer")
 		"note that Command-T has a perfectly good buffer browser mapped by
-		"default to <leader>b, but LustyJuggler is a little better.
-	endif
-	if exists(":CommandT")
-		nnoremap <silent> <leader>t :CommandT<cr>
+		"default to <leader>b. the <leader><tab> function is replicated here
+		nnoremap <silent> <leader><tab> :b#<cr>
+	else
+		"If both aren't installed, then use :ls
+		nnoremap <silent> <leader>b :ls<cr>
+		nnoremap <silent> <leader><tab> :b#<cr>
 	endif
 endfunction
 
@@ -92,7 +110,7 @@ endfunction
 " argument. A little tricky since Lusty (currently) has a little bug that
 " doesn't properly escape backslashes. Note that an untested alternative may
 " be to use the 'shellslash' option
-function! CallLusty(dir)
+function! s:CallLusty(dir)
 	let l:d = substitute(substitute(a:dir, '\\', '/', 'g'), '/$', '', '')
 	exe ":LustyFilesystemExplorer" l:d
 endfunction
