@@ -15,8 +15,13 @@ let g:molokai_original = 1
 let g:CommandTScanDotDirectories = 1
 let g:LustyJugglerShowKeys = 'a'
 
-syntax on
+" Almost always I am using putty (or gvim), which well supports 256 colors
+" The termcap is not accurate by default on my systems... so be it
+if $TERM =~# 'screen\|xterm'
+	set t_Co=256
+endif
 
+syntax on
 colorscheme molokai
 set nocompatible
 
