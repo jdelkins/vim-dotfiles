@@ -42,7 +42,9 @@ set   backspace=indent,eol,start
 set   autoindent
 set   wrap
 set   textwidth=79
-set   formatoptions=qrn1
+" Note: use 'set fo+=t' to enable wrapping of text. "c" does this for comments.
+" See :help fo-table
+set   formatoptions=qrn1ac
 "  - Window Layout                                                         {{{2
 set   scrolloff=3
 set   visualbell
@@ -139,7 +141,7 @@ function! s:CallLusty(dir)
 endfunction
 
 "---------------------------------------------------------------------------}}}
-" MINOR SCRIPTS                                                            {{{1
+" SMALL SCRIPTS                                                            {{{1
 "   This section is for small scripts that don't really warrant being a plugin
 
 "   - PadToMark                                                            {{{2
