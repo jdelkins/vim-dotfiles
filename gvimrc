@@ -1,6 +1,11 @@
+" What:   My gvimrc
+" Author: Joel D. Elkins <joel@elkins.com>
+
+" Appearance
 set columns=132
 set lines=50
-set laststatus=2
+
+" Default font choice
 if has("gui_win32")
 	"set gfn=DejaVu_Sans_Mono:h9:cANSI
 	set gfn=Envy_Code_R:h10:cANSI

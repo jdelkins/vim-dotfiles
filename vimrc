@@ -1,54 +1,66 @@
-" A lot of these ideas came from:
+" What:   My vimrc file
+" Author: Joel D. Elkins <joel@elkins.com>
+"
+" References:
 " http://stevelosh.com/blog/2010/09/coming-home-to-vim/
-" Joel D. Elkins <joel@elkins.com>
-" 2011-05-25
-
+"------------------------------------------------------------------------------
+" PATHOGEN                                                                 {{{1
 filetype off
 call pathogen#infect()
 call pathogen#helptags()
 filetype plugin indent on
 
-" Plugin defaults
+"---------------------------------------------------------------------------}}}
+" PLUGIN CONFIGURATION                                                     {{{1
 let mapleader = ","
 let g:sfe_mapLeader = ",s"
 let g:molokai_original = 1
 let g:CommandTScanDotDirectories = 1
 let g:LustyJugglerShowKeys = 'a'
 
-" Almost always I am using putty (or gvim), which well supports 256 colors
-" The termcap is not accurate by default on my systems... so be it
+"---------------------------------------------------------------------------}}}
+" VIM SETTINGS                                                             {{{1
+"  - TTY settings                                                          {{{2
 if $TERM =~# 'screen\|xterm'
+	" Almost always I am using putty (or gvim), which well supports 256 colors
+	" The termcap is not accurate by default on my systems... so be it
 	set t_Co=256
 endif
-
+set   ttyfast
+"  - Colors                                                                {{{2
 syntax on
 autocmd ColorScheme * hi ColorColumn ctermbg=234 guibg=#3B3A32
 colorscheme vividchalk
 set nocompatible
-
+"  - Tabulation                                                            {{{2
 set   tabstop=4
 set   shiftwidth=4
 set   softtabstop=4
 set noexpandtab
-
-set   encoding=utf-8
-set   scrolloff=3
+"  - Indendation and wrapping                                              {{{2
+set   backspace=indent,eol,start
 set   autoindent
+set   wrap
+set   textwidth=79
+set   formatoptions=qrn1
+"  - Window Layout                                                         {{{2
+set   scrolloff=3
+set   visualbell
 set   showmode
 set   showcmd
+set   laststatus=2
+set   ruler
+set   report=2
+set   colorcolumn=+1
+"  - Editor behavior and features                                          {{{2
+set   encoding=utf-8
 set   hidden
 set   wildmenu
 set   wildmode=list:longest
-set   visualbell
 set nocursorline
-set   ttyfast
-set   ruler
-set   backspace=indent,eol,start
-set   laststatus=2
 set   relativenumber
 set   undofile
-set   report=2
-
+"  - Searching                                                             {{{2
 nnoremap / /\v
 vnoremap / /\v
 set   ignorecase
@@ -60,14 +72,20 @@ set   hlsearch
 nnoremap <leader><space> :noh<cr>
 nnoremap <tab> %
 vnoremap <tab> %
-
-set   wrap
-set   textwidth=79
-set   formatoptions=qrn1
-set   colorcolumn=+1
-
+"  - Convenience maps                                                      {{{2
+" Edit vimrc
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 nnoremap <leader>w <C-w>v<C-w>l
+" Window navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+" Folding
+nnoremap Z za
+
+"---------------------------------------------------------------------------}}}
+" FILE AND BUFFER EXPLORER                                                 {{{1
 
 " Note this autocmd is necessary because we are dynamically mapping based on
 " whether plugins are installed, which is not knowable normally when .vimrc
@@ -96,7 +114,7 @@ function! s:dynamic_file_explorer()
 endfunction
 
 " Decide which buffer browser to make the default
-function s:dynamic_buffer_explorer()
+function! s:dynamic_buffer_explorer()
 	if exists(":LustyJuggler")
 		nnoremap <silent> <leader>b :LustyJuggler<cr>
 		nnoremap <silent> <leader><tab> :LustyJugglePrevious<cr>
@@ -120,12 +138,11 @@ function! s:CallLusty(dir)
 	exe ":LustyFilesystemExplorer" l:d
 endfunction
 
-" Window navigation
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+"---------------------------------------------------------------------------}}}
+" MINOR SCRIPTS                                                            {{{1
+"   This section is for small scripts that don't really warrant being a plugin
 
+"   - PadToMark                                                            {{{2
 " Utility function to line up tabular info. Pass in a mark name (e.g. "'a")
 " and this will insert spaces to align the insertion point to the mark's
 " virtcol (visual alignment, not byte alignment). Nothing happens if the
@@ -147,3 +164,5 @@ for m in range(26)
 	let c = nr2char(char2nr('a') + m)
 	exe 'nnoremap <silent> t' . c . " :call PadToMark(\"'" . c . '")<cr>'
 endfor
+
+" vim:fdm=marker:ai
