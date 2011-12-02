@@ -53,15 +53,21 @@ set   showcmd
 set   laststatus=2
 set   ruler
 set   report=2
-set   colorcolumn=+1
+if exists("&colorcolumn") " requires 7.3
+	set colorcolumn=+1
+endif
 "  - Editor behavior and features                                          {{{2
 set   encoding=utf-8
 set   hidden
 set   wildmenu
 set   wildmode=list:longest
 set nocursorline
-set   relativenumber
-set   undofile
+if exists("&relativenumber") " requires 7.3
+	set relativenumber
+endif
+if exists("&undofile") " requires 7.3
+	set undofile
+endif
 "  - Searching                                                             {{{2
 nnoremap / /\v
 vnoremap / /\v
