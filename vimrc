@@ -21,18 +21,23 @@ let g:LustyJugglerShowKeys = 'a'
 "---------------------------------------------------------------------------}}}
 " VIM SETTINGS                                                             {{{1
 "  - TTY settings                                                          {{{2
+
 if $TERM =~# 'screen\|xterm'
   " Almost always I am using putty (or gvim), which well supports 256 colors
   " The termcap is not accurate by default on my systems... so be it
   set t_Co=256
 endif
 set   ttyfast
+
 "  - Colors                                                                {{{2
+
 syntax on
 autocmd ColorScheme * hi ColorColumn ctermbg=234 guibg=#3B3A32
 colorscheme vividchalk
 set nocompatible
+
 "  - Tabulation                                                            {{{2
+
 "  Non filetype specific defaults
 set   tabstop=8
 set   shiftwidth=8
@@ -53,7 +58,9 @@ augroup vimtab
   autocmd BufEnter {*.vim,*vimrc,$MYVIMRC,$MYGVIMRC} setlocal sts=2
   autocmd BufEnter {*.vim,*vimrc,$MYVIMRC,$MYGVIMRC} setlocal noexpandtab
 augroup END
+
 " - Indendation and wrapping                                               {{{2
+
 set   backspace=indent,eol,start
 set   autoindent
 set   wrap
@@ -61,7 +68,9 @@ set   textwidth=79
 " Note: use 'set fo+=t' to enable wrapping of text. "c" does this for comments.
 " See :help fo-table
 set   formatoptions=qrn1ac
+
 "  - Window Layout                                                         {{{2
+
 set   scrolloff=3
 set   visualbell
 set   showmode
@@ -72,7 +81,9 @@ set   report=2
 if exists("&colorcolumn") " requires 7.3
   set colorcolumn=+1
 endif
+
 "  - Editor behavior and features                                          {{{2
+
 set   encoding=utf-8
 set   hidden
 set   wildmenu
@@ -82,9 +93,32 @@ if exists("&relativenumber") " requires 7.3
   set relativenumber
 endif
 if exists("&undofile") " requires 7.3
+  " I want undofile on by default unless the file is being controlled by SCM,
+  " in which case the feature is much less useful, and possibly harmful
+  " (considering it oculd have been edited in another repository).
   set undofile
+  " turn it off if a .git or .hg directory is found above in the path
+  autocmd BufEnter * call <SID>TurnOffUndofileIfSCM(expand("<afile>"))
+  function! s:TurnOffUndofileForVersionControlled(targ)
+    let dir = fnamemodify(a:targ, ":p:h")
+    try
+      if      sfe#findParentDirIncludingDir(dir, ".git") != '' || 
+	    \ sfe#findParentDirIncludingDir(dir, ".hg")  != ''
+	setlocal noundofile
+      endif
+    catch /E117/
+      " We get here if the scmfrontend package is not installed
+      if          isdirectory(dir . '/.git') ||      isdirectory(dir . '/.hg') ||
+           \    isdirectory(dir . '../.git') ||    isdirectory(dir . '../.hg') ||
+           \ isdirectory(dir . '../../.git') || isdirectory(dir . '../../.hg')
+	setlocal noundofile
+      endif
+    endtry
+  endfunction
 endif
+
 "  - Searching                                                             {{{2
+
 nnoremap / /\v
 vnoremap / /\v
 set   ignorecase
@@ -96,7 +130,9 @@ set   hlsearch
 nnoremap <leader><space> :noh<cr>
 nnoremap <tab> %
 vnoremap <tab> %
+
 "  - Convenience maps                                                      {{{2
+
 " Edit vimrc
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 nnoremap <leader>w <C-w>v<C-w>l
