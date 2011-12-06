@@ -17,6 +17,9 @@ let g:sfe_mapLeader = ",s"
 let g:molokai_original = 1
 let g:CommandTScanDotDirectories = 1
 let g:LustyJugglerShowKeys = 'a'
+" this is a bug fix. See:
+" https://bitbucket.org/ns9tks/vim-scmfrontend/pull-request/1/small-change-to-quoting-in-in-g
+let g:sfe_gitLogOption = '-1000 --all --graph --pretty=format:"%h (%ci) %s"'
 
 "---------------------------------------------------------------------------}}}
 " VIM SETTINGS                                                             {{{1
