@@ -98,8 +98,8 @@ if exists("&undofile") " requires 7.3
   " (considering it oculd have been edited in another repository).
   set undofile
   " turn it off if a .git or .hg directory is found above in the path
-  autocmd BufEnter * call <SID>TurnOffUndofileIfSCM(expand("<afile>"))
-  function! s:TurnOffUndofileForVersionControlled(targ)
+  autocmd BufEnter * call <SID>NoUndofileIfSCM(expand("<afile>"))
+  function! s:NoUndofileIfSCM(targ)
     let dir = fnamemodify(a:targ, ":p:h")
     try
       if      sfe#findParentDirIncludingDir(dir, ".git") != '' || 
