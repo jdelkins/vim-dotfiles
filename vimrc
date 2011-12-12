@@ -78,12 +78,15 @@ set   scrolloff=3
 set   visualbell
 set   showmode
 set   showcmd
-set   laststatus=2
-set   ruler
 set   report=2
 if exists("&colorcolumn") " requires 7.3
   set colorcolumn=+1
 endif
+" Statuline configuration
+set   ruler
+set   laststatus=2
+set   statusline=%<%f%=\ %{fugitive#statusline()}\ [%1*%M%*%n%R%H]\ %-19(%3l,%02c%03V%)%O'%02b'
+hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red
 
 "  - Editor behavior and features                                          {{{2
 
