@@ -18,6 +18,9 @@ let g:molokai_original = 1
 let g:CommandTScanDotDirectories = 1
 let g:LustyJugglerShowKeys = 'a'
 let g:sfe_gitLogOption = '-1000 --all --graph --date=short --pretty=format:"%h %ad | %s%d [%an]"'
+if &shell =~# 'cmd'
+  let g:fugitive_git_executable = 'tgit'
+endif
 
 "---------------------------------------------------------------------------}}}
 " VIM SETTINGS                                                             {{{1
