@@ -47,19 +47,10 @@ set   shiftwidth=8
 set   softtabstop=0
 set noexpandtab
 " Preferences for various file types
-augroup rubytab
+augroup tabulation
   autocmd!
-  autocmd BufEnter *.rb setlocal ts=2
-  autocmd BufEnter *.rb setlocal sw=2
-  autocmd BufEnter *.rb setlocal sts=2
-  autocmd BufEnter *.rb setlocal expandtab
-augroup END
-augroup vimtab
-  autocmd!
-  autocmd BufEnter {*.vim,*vimrc,$MYVIMRC,$MYGVIMRC} setlocal ts=8
-  autocmd BufEnter {*.vim,*vimrc,$MYVIMRC,$MYGVIMRC} setlocal sw=2
-  autocmd BufEnter {*.vim,*vimrc,$MYVIMRC,$MYGVIMRC} setlocal sts=2
-  autocmd BufEnter {*.vim,*vimrc,$MYVIMRC,$MYGVIMRC} setlocal noexpandtab
+  autocmd BufEnter *.rb setlocal ts=2 sw=2 sts=2 expandtab
+  autocmd BufEnter {*.vim,*vimrc,$MYVIMRC,$MYGVIMRC} setlocal ts=8 sw=2 sts=2 noexpandtab
 augroup END
 
 " - Indendation and wrapping                                               {{{2
