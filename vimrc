@@ -36,7 +36,6 @@ set   ttyfast
 "  - Colors                                                                {{{2
 
 syntax on
-autocmd ColorScheme * hi ColorColumn ctermbg=234 guibg=#3B3A32
 colorscheme vividchalk
 set nocompatible
 
