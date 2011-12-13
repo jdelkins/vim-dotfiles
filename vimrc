@@ -62,6 +62,11 @@ set   textwidth=79
 " Note: use 'set fo+=t' to enable wrapping of text. "c" does this for comments.
 " See :help fo-table
 set   formatoptions=qrn1ac
+" Preferences for various file types
+augroup indentation_and_wrapping
+  autocmd!
+  autocmd BufEnter COMMIT_EDITMSG setlocal tw=72 fo+=t
+augroup END
 
 "  - Window Layout                                                         {{{2
 
