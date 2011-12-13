@@ -85,8 +85,7 @@ endif
 " Statuline configuration
 set   ruler
 set   laststatus=2
-set   statusline=%<%f%=\ %{fugitive#statusline()}\ [%1*%M%*%n%R%H]\ %-19(%3l,%02c%03V%)%O'%02b'
-hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red
+set   statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
 "  - Editor behavior and features                                          {{{2
 
