@@ -26,12 +26,19 @@ endif
 " VIM SETTINGS                                                             {{{1
 "  - TTY settings                                                          {{{2
 
-if $TERM =~# 'screen\|xterm'
+if &term =~# 'screen\|xterm.*'
   " Almost always I am using putty (or gvim), which well supports 256 colors
   " The termcap is not accurate by default on my systems... so be it
   set t_Co=256
 endif
-set   ttyfast
+if &term == "xterm-ipad"
+  nnoremap <Tab> <Esc>
+  vnoremap <Tab> <Esc>gV
+  onoremap <Tab> <Esc>
+  inoremap <Tab> <Esc>`^
+  inoremap <Leader><Tab> <Tab>
+endif
+set ttyfast
 
 "  - Colors                                                                {{{2
 
@@ -129,8 +136,6 @@ set   incsearch
 set   showmatch
 set   hlsearch
 nnoremap <leader><space> :noh<cr>
-nnoremap <tab> %
-vnoremap <tab> %
 
 "  - Convenience maps                                                      {{{2
 
